@@ -8,7 +8,7 @@
 
 #import "ViewController.h"
 
-@interface ViewController () <UITableViewDataSource, UITableViewDelegate>
+@interface ViewController () <UITableViewDataSource>
 
 @property (nonatomic, assign) int numSections;
 @property (nonatomic, strong) UIBarButtonItem *button;
@@ -21,6 +21,7 @@
     [super viewDidLoad];
     // Do any additional setup after loading the view, typically from a nib.
     self.numSections = 2;
+    self.tableView.dataSource = self;
     self.button = [[UIBarButtonItem alloc] initWithTitle:@"Add Section" style:UIBarButtonItemStylePlain target:self action:@selector(buttonMethod)];
     self.navigationItem.rightBarButtonItem = self.button;
     self.view.backgroundColor = [UIColor redColor];
