@@ -53,6 +53,9 @@
         curNumRows++;
         self.numRowsForSection[newSectionIndex] = [NSNumber numberWithInt:curNumRows];
         [self.tableView reloadData];
+        [self.tableView scrollToRowAtIndexPath:[NSIndexPath indexPathForRow:(curNumRows-1) inSection:newSectionIndex]
+                         atScrollPosition:UITableViewScrollPositionBottom
+                                 animated:YES];
     } else {
         // cancel timer
         self.appearTimer = nil;
