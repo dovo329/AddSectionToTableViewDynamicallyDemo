@@ -11,7 +11,10 @@
 @interface ViewController () <UITableViewDataSource, UITableViewDelegate>
 
 @property (nonatomic, assign) int numSections;
+@property (nonatomic, strong) NSMutableArray *numRowsForSection;
 @property (nonatomic, strong) UIBarButtonItem *button;
+@property (nonatomic, strong) NSTimer *appearTimer;
+
 
 @end
 
@@ -20,7 +23,10 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view, typically from a nib.
-    self.numSections = 3;
+    self.numSections = 2;
+    self.numRowsForSection = [NSMutableArray new];
+    [self.numRowsForSection addObject:@1];
+    [self.numRowsForSection addObject:@2];
     self.tableView.dataSource = self;
     self.tableView.delegate = self;
     self.button = [[UIBarButtonItem alloc] initWithTitle:@"Add Section" style:UIBarButtonItemStylePlain target:self action:@selector(buttonMethod)];
@@ -32,7 +38,26 @@
 {
     NSLog(@"button pressed");
     self.numSections++;
-    [self.tableView reloadData];
+    // add new section with 0 rows to begin with
+    [self.numRowsForSection addObject:@0];
+    // start timer to make new rows appear
+    self.appearTimer = [NSTimer scheduledTimerWithTimeInterval:1.0 target:self selector:@selector(timedAppearMethod) userInfo:nil repeats:YES];
+}
+
+-(void)timedAppearMethod
+{
+    int newSectionIndex = (int)([self.numRowsForSection count]-1);
+    int curNumRows = [self.numRowsForSection[newSectionIndex] intValue];
+    if (curNumRows <= self.numSections)
+    {
+        curNumRows++;
+        self.numRowsForSection[newSectionIndex] = [NSNumber numberWithInt:curNumRows];
+        [self.tableView reloadData];
+    } else {
+        // cancel timer
+        self.appearTimer = nil;
+        [self.appearTimer invalidate];
+    }
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
@@ -58,7 +83,7 @@
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    return (section+1);
+    return [self.numRowsForSection[section] intValue];
 }
 
 - (void)didReceiveMemoryWarning {
