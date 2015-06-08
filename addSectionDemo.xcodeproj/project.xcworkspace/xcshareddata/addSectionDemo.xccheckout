@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>IDESourceControlProjectFavoriteDictionaryKey</key>
+	<false/>
+	<key>IDESourceControlProjectIdentifier</key>
+	<string>3C70C566-2690-4684-8777-CCBC355C6192</string>
+	<key>IDESourceControlProjectName</key>
+	<string>addSectionDemo</string>
+	<key>IDESourceControlProjectOriginsDictionary</key>
+	<dict>
+		<key>A863FFBD97A5773CD1427D1321720172FB89EDAB</key>
+		<string>https://github.com/dovo329/AddSectionToTableViewDynamicallyDemo.git</string>
+	</dict>
+	<key>IDESourceControlProjectPath</key>
+	<string>addSectionDemo.xcodeproj</string>
+	<key>IDESourceControlProjectRelativeInstallPathDictionary</key>
+	<dict>
+		<key>A863FFBD97A5773CD1427D1321720172FB89EDAB</key>
+		<string>../..</string>
+	</dict>
+	<key>IDESourceControlProjectURL</key>
+	<string>https://github.com/dovo329/AddSectionToTableViewDynamicallyDemo.git</string>
+	<key>IDESourceControlProjectVersion</key>
+	<integer>111</integer>
+	<key>IDESourceControlProjectWCCIdentifier</key>
+	<string>A863FFBD97A5773CD1427D1321720172FB89EDAB</string>
+	<key>IDESourceControlProjectWCConfigurations</key>
+	<array>
+		<dict>
+			<key>IDESourceControlRepositoryExtensionIdentifierKey</key>
+			<string>public.vcs.git</string>
+			<key>IDESourceControlWCCIdentifierKey</key>
+			<string>A863FFBD97A5773CD1427D1321720172FB89EDAB</string>
+			<key>IDESourceControlWCCName</key>
+			<string>addSectionDemo</string>
+		</dict>
+	</array>
+</dict>
+</plist>

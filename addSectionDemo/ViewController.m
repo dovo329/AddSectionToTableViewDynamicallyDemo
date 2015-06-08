@@ -8,7 +8,7 @@
 
 #import "ViewController.h"
 
-@interface ViewController () <UITableViewDataSource>
+@interface ViewController () <UITableViewDataSource, UITableViewDelegate>
 
 @property (nonatomic, assign) int numSections;
 @property (nonatomic, strong) UIBarButtonItem *button;
@@ -20,8 +20,9 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view, typically from a nib.
-    self.numSections = 2;
+    self.numSections = 3;
     self.tableView.dataSource = self;
+    self.tableView.delegate = self;
     self.button = [[UIBarButtonItem alloc] initWithTitle:@"Add Section" style:UIBarButtonItemStylePlain target:self action:@selector(buttonMethod)];
     self.navigationItem.rightBarButtonItem = self.button;
     self.view.backgroundColor = [UIColor redColor];
@@ -45,6 +46,11 @@
     return cell;
 }
 
+- (NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section
+{
+    return [NSString stringWithFormat:@"Section: %d", (int)section];
+}
+
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
 {
     return self.numSections;
@@ -52,7 +58,7 @@
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    return 2;
+    return (section+1);
 }
 
 - (void)didReceiveMemoryWarning {
