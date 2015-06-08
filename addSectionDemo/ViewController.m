@@ -58,8 +58,8 @@
                                  animated:YES];
     } else {
         // cancel timer
-        self.appearTimer = nil;
         [self.appearTimer invalidate];
+        self.appearTimer = nil;
     }
 }
 
