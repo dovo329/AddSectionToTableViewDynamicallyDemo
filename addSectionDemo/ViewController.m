@@ -42,6 +42,7 @@
     [self.numRowsForSection addObject:@0];
     // start timer to make new rows appear
     self.appearTimer = [NSTimer scheduledTimerWithTimeInterval:1.0 target:self selector:@selector(timedAppearMethod) userInfo:nil repeats:YES];
+    self.button.enabled = NO;
 }
 
 -(void)timedAppearMethod
@@ -52,14 +53,34 @@
     {
         curNumRows++;
         self.numRowsForSection[newSectionIndex] = [NSNumber numberWithInt:curNumRows];
+        
         [self.tableView reloadData];
+        
+        NSIndexPath *indexPath = [NSIndexPath indexPathForRow:curNumRows-1 inSection:newSectionIndex];
+        
         [self.tableView scrollToRowAtIndexPath:[NSIndexPath indexPathForRow:(curNumRows-1) inSection:newSectionIndex]
-                         atScrollPosition:UITableViewScrollPositionBottom
-                                 animated:YES];
+                              atScrollPosition:UITableViewScrollPositionBottom
+                                      animated:NO];
+        
+        UITableViewCell *newCell = [self.tableView cellForRowAtIndexPath:indexPath];
+        newCell.textLabel.alpha = 0.0;
+        newCell.detailTextLabel.alpha = 0.0;
+        [UIView animateWithDuration:1.0
+                              delay:0.0
+                            options:0
+                         animations:^{
+                             newCell.textLabel.alpha = 1.0;
+                             newCell.detailTextLabel.alpha = 1.0;
+                         }
+                         completion:^(BOOL finished){
+                             //NSLog(@"Animation Done!");
+                         }];
+        
     } else {
         // cancel timer
         [self.appearTimer invalidate];
         self.appearTimer = nil;
+        self.button.enabled = YES;
     }
 }
 
