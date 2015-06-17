@@ -86,6 +86,7 @@
     // do a random time interval
     double randTime = (((double)arc4random() / ARC4RANDOM_MAX)*4.0) + 1.0;
     NSLog(@"(randTime=%f", randTime);
+    [self.appearTimer invalidate];
     self.appearTimer = [NSTimer scheduledTimerWithTimeInterval:randTime target:self selector:@selector(timedAppearMethod) userInfo:nil repeats:NO];
 }
 
