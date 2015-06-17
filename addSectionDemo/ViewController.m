@@ -8,7 +8,7 @@
 
 #import "ViewController.h"
 
-@interface ViewController () <UITableViewDataSource, UITableViewDelegate>
+@interface ViewController () <UITableViewDataSource, UITableViewDelegate, UIScrollViewDelegate>
 
 @property (nonatomic, assign) int numSections;
 @property (nonatomic, strong) NSMutableArray *numRowsForSection;
@@ -23,10 +23,12 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view, typically from a nib.
-    self.numSections = 2;
+    self.numSections = 4;
     self.numRowsForSection = [NSMutableArray new];
     [self.numRowsForSection addObject:@1];
     [self.numRowsForSection addObject:@2];
+    [self.numRowsForSection addObject:@3];
+    [self.numRowsForSection addObject:@4];
     self.tableView.dataSource = self;
     self.tableView.delegate = self;
     self.button = [[UIBarButtonItem alloc] initWithTitle:@"Add Section" style:UIBarButtonItemStylePlain target:self action:@selector(buttonMethod)];
@@ -54,34 +56,42 @@
         curNumRows++;
         self.numRowsForSection[newSectionIndex] = [NSNumber numberWithInt:curNumRows];
         
-        [self.tableView reloadData];
-        
         NSIndexPath *indexPath = [NSIndexPath indexPathForRow:curNumRows-1 inSection:newSectionIndex];
-        
-        [self.tableView scrollToRowAtIndexPath:[NSIndexPath indexPathForRow:(curNumRows-1) inSection:newSectionIndex]
-                              atScrollPosition:UITableViewScrollPositionBottom
-                                      animated:NO];
-        
-        UITableViewCell *newCell = [self.tableView cellForRowAtIndexPath:indexPath];
-        newCell.textLabel.alpha = 0.0;
-        newCell.detailTextLabel.alpha = 0.0;
-        [UIView animateWithDuration:1.0
-                              delay:0.0
-                            options:0
+        UITableViewCell *endCell = [self.tableView cellForRowAtIndexPath:indexPath];
+        //endCell.textLabel.alpha = 0.0;
+        //endCell.detailTextLabel.alpha = 0.0;
+        /*[UIView animateWithDuration:2.0
                          animations:^{
-                             newCell.textLabel.alpha = 1.0;
-                             newCell.detailTextLabel.alpha = 1.0;
-                         }
-                         completion:^(BOOL finished){
-                             //NSLog(@"Animation Done!");
-                         }];
-        
+                             endCell.textLabel.alpha = 1.0;
+                             endCell.detailTextLabel.alpha = 1.0;
+                         }];*/
+
+        [self.tableView reloadData];
+
+        [self.tableView scrollToRowAtIndexPath:[NSIndexPath indexPathForRow:(curNumRows-1) inSection:newSectionIndex]
+         atScrollPosition:UITableViewScrollPositionBottom
+         animated:YES];
     } else {
         // cancel timer
         [self.appearTimer invalidate];
         self.appearTimer = nil;
         self.button.enabled = YES;
     }
+}
+
+- (void)scrollViewDidEndScrollingAnimation:(UIScrollView *)scrollView
+{
+    /*int newSectionIndex = (int)([self.numRowsForSection count]-1);
+    int curNumRows = [self.numRowsForSection[newSectionIndex] intValue];
+    NSIndexPath *indexPath = [NSIndexPath indexPathForRow:curNumRows-1 inSection:newSectionIndex];
+    UITableViewCell *endCell = [self.tableView cellForRowAtIndexPath:indexPath];
+    [UIView animateWithDuration:2.0
+                     animations:^{
+                         endCell.textLabel.alpha = 1.0;
+                         endCell.detailTextLabel.alpha = 1.0;
+                     }];
+    
+    NSLog(@"didendscrolling");*/
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
@@ -92,6 +102,7 @@
     }
     cell.textLabel.text = [NSString stringWithFormat:@"row: %d", (int)indexPath.row];
     cell.detailTextLabel.text = [NSString stringWithFormat:@"section: %d", (int)indexPath.section];
+    
     return cell;
 }
 
