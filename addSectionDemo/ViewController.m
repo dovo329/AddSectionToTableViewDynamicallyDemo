@@ -1,12 +1,14 @@
 //
 //  ViewController.m
 //  addSectionDemo
-//
+//timedAppearMethod
 //  Created by Douglas Voss on 6/6/15.
 //  Copyright (c) 2015 DougsApps. All rights reserved.
 //
 
 #import "ViewController.h"
+
+#define ARC4RANDOM_MAX      0x100000000
 
 @interface ViewController () <UITableViewDataSource, UITableViewDelegate, UIScrollViewDelegate>
 
@@ -43,7 +45,11 @@
     // add new section with 0 rows to begin with
     [self.numRowsForSection addObject:@0];
     // start timer to make new rows appear
-    self.appearTimer = [NSTimer scheduledTimerWithTimeInterval:1.0 target:self selector:@selector(timedAppearMethod) userInfo:nil repeats:YES];
+    
+    // do a random time interval
+    double randTime = (((double)arc4random() / ARC4RANDOM_MAX)*4.0) + 1.0;
+    NSLog(@"(randTime=%f", randTime);
+    self.appearTimer = [NSTimer scheduledTimerWithTimeInterval:randTime target:self selector:@selector(timedAppearMethod) userInfo:nil repeats:NO];
     self.button.enabled = NO;
 }
 
@@ -77,6 +83,10 @@
         self.appearTimer = nil;
         self.button.enabled = YES;
     }
+    // do a random time interval
+    double randTime = (((double)arc4random() / ARC4RANDOM_MAX)*4.0) + 1.0;
+    NSLog(@"(randTime=%f", randTime);
+    self.appearTimer = [NSTimer scheduledTimerWithTimeInterval:randTime target:self selector:@selector(timedAppearMethod) userInfo:nil repeats:NO];
 }
 
 - (void)scrollViewDidEndScrollingAnimation:(UIScrollView *)scrollView
